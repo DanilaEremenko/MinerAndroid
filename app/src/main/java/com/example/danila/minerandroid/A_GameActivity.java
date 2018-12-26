@@ -239,5 +239,7 @@ public class A_GameActivity extends Activity {
         startActivity(new Intent(this, A_RecordsTableActivity.class));
     }
 
-
+    public Logic getLogic() {
+        return logic;
+    }
 }

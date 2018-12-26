@@ -32,7 +32,7 @@ public class A_MenuActivity extends Activity {
         exit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToExit();
+                finish();
             }
         });
 
@@ -45,10 +45,6 @@ public class A_MenuActivity extends Activity {
 
     private void goToRecordsActivity() {
         startActivity(new Intent(this, A_RecordsTableActivity.class));
-    }
-
-    private void goToExit() {
-        /*TODO*/
     }
 
 }
