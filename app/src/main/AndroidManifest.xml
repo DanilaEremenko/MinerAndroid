@@ -14,7 +14,6 @@
 
         <activity
             android:name="com.example.danila.minerandroid.AMenuActivity"
-            android:configChanges="orientation"
             android:launchMode="singleTask"
             android:label="@string/app_name">
             <intent-filter>
@@ -24,22 +23,16 @@
         </activity>
 
         <activity
-            android:name="com.example.danila.minerandroid.ARecordsTableActivity"
-            android:configChanges="orientation">
-
+            android:name="com.example.danila.minerandroid.ARecordsTableActivity">
         </activity>
 
 
         <activity
-            android:name="com.example.danila.minerandroid.AChooseLevelActivity"
-            android:configChanges="orientation">
-
+            android:name="com.example.danila.minerandroid.AChooseLevelActivity">
         </activity>
 
         <activity
-            android:name="com.example.danila.minerandroid.AGameActivity"
-            android:configChanges="orientation">
-
+            android:name="com.example.danila.minerandroid.AGameActivity">
         </activity>
 
 
