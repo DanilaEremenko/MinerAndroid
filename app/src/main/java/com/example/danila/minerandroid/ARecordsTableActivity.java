@@ -23,7 +23,7 @@ public class ARecordsTableActivity extends Activity {
         gridRecords.setColumnCount(2);
 
         dbConnector = new DBConnector(getApplicationContext());
-        List<Record> records = dbConnector.getAllRecords(this);
+        List<Record> records = dbConnector.getAllRecords();
 
 
         int i = 1;

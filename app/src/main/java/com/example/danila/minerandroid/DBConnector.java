@@ -28,7 +28,7 @@ class DBConnector {
         database.insert(DBHelper.TABLE_NAME, null, values);
     }
 
-    List<Record> getAllRecords(Context context) {
+    List<Record> getAllRecords() {
 
         final int MAX_RECORDS_SIZE = 10;
 
