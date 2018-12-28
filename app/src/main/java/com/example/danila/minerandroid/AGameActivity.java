@@ -1,8 +1,8 @@
 package com.example.danila.minerandroid;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -15,9 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-public class A_GameActivity extends Activity {
-    private final int FIELD_WIDTH = 6;
-    private final int FIELD_HEIGHT = 8;
+public class AGameActivity extends Activity {
+
+    private DBConnector dbConnector;
+
+    final static int FIELD_WIDTH = 6;
+    final static int FIELD_HEIGHT = 8;
 
     private static int minesNumber;
 
@@ -28,11 +31,12 @@ public class A_GameActivity extends Activity {
     TextView minesNumberView;
 
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
+
+        dbConnector = new DBConnector(getApplicationContext());
 
         chronometer = findViewById(R.id.timer_view);
         chronometer.start();
@@ -57,7 +61,7 @@ public class A_GameActivity extends Activity {
             chronometer.setBase(savedInstanceState.getLong("chronometer"));
         }
 
-        minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+        minesNumberView.setText(String.valueOf(logic.getMinesDigit() - logic.getFindedMinesDigit()));
 
 
         menuButton.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +76,7 @@ public class A_GameActivity extends Activity {
             public void onClick(View v) {
                 logic.reload();
                 updateAllCells();
-                minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+                minesNumberView.setText(String.valueOf((logic.getMinesDigit() - logic.getFindedMinesDigit())));
                 chronometer.setBase(SystemClock.elapsedRealtime());
 
             }
@@ -84,7 +88,7 @@ public class A_GameActivity extends Activity {
             public void onClick(View v) {
                 logic.reloadLast();
                 updateAllCells();
-                minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+                minesNumberView.setText(String.valueOf(logic.getMinesDigit() - logic.getFindedMinesDigit()));
                 chronometer.setBase(SystemClock.elapsedRealtime());
 
             }
@@ -101,11 +105,10 @@ public class A_GameActivity extends Activity {
     }
 
 
-    @SuppressLint("SetTextI18n")
     void initGameField(GridLayout gameField, TextView minesNumberView, Logic logic) {
 
 
-        minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+        minesNumberView.setText(String.valueOf(logic.getMinesDigit() - logic.getFindedMinesDigit()));
 
         /*init gameField*/
         gameField.setColumnCount(logic.getLevelWidth());
@@ -133,7 +136,7 @@ public class A_GameActivity extends Activity {
                         case Logic.GAME_CONTINUES:
                             logic.checkCell(gc.getLogicCell().getNumberInArray());
                             updateAllCells();
-                            minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+                            minesNumberView.setText(String.valueOf(logic.getMinesDigit() - logic.getFindedMinesDigit()));
                             break;
                         case Logic.GAME_LOSSED:
                             logic.checkAll();
@@ -144,8 +147,20 @@ public class A_GameActivity extends Activity {
                             checkAllCells();
                             gameWin();
                             break;
-
                     }
+
+                    switch (logic.checkGameCondition()) {
+                        case Logic.GAME_LOSSED:
+                            logic.checkAll();
+                            checkAllCells();
+                            break;
+                        case Logic.GAME_WIN:
+                            logic.checkAll();
+                            checkAllCells();
+                            gameWin();
+                            break;
+                    }
+
 
                 }
             });
@@ -156,7 +171,7 @@ public class A_GameActivity extends Activity {
                         case Logic.GAME_CONTINUES:
                             logic.changeFlag(gc.getLogicCell().getNumberInArray());
                             updateAllCells();
-                            minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+                            minesNumberView.setText(String.valueOf(logic.getMinesDigit() - logic.getFindedMinesDigit()));
                             break;
                         case Logic.GAME_LOSSED:
                             logic.checkAll();
@@ -167,7 +182,17 @@ public class A_GameActivity extends Activity {
                             checkAllCells();
                             gameWin();
                             break;
-
+                    }
+                    switch (logic.checkGameCondition()) {
+                        case Logic.GAME_LOSSED:
+                            logic.checkAll();
+                            checkAllCells();
+                            break;
+                        case Logic.GAME_WIN:
+                            logic.checkAll();
+                            checkAllCells();
+                            gameWin();
+                            break;
                     }
 
                     return true;
@@ -180,7 +205,6 @@ public class A_GameActivity extends Activity {
 
 
     //Показывает изначальные условия
-    @SuppressLint("SetTextI18n")
     void checkAllCells() {
         for (GraphicCell graphicCell : graphicCells)
             if (!graphicCell.getLogicCell().isFlag())
@@ -188,7 +212,7 @@ public class A_GameActivity extends Activity {
                     graphicCell.setBackgroundColor(GraphicCell.MINE_COLOR);
                 else {
                     graphicCell.setBackgroundColor(GraphicCell.EMPTY_COLOR);
-                    graphicCell.setText("" + graphicCell.getLogicCell().getConditon());
+                    graphicCell.setText(String.valueOf(graphicCell.getLogicCell().getConditon()));
                 }
 
 
@@ -201,7 +225,7 @@ public class A_GameActivity extends Activity {
     }
 
     public static void setMinesNumber(int minesNumber) {
-        A_GameActivity.minesNumber = minesNumber;
+        AGameActivity.minesNumber = minesNumber;
     }
 
 
@@ -210,7 +234,7 @@ public class A_GameActivity extends Activity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("You won!");
         alertDialog.setMessage("Print name:");
-        final EditText input = new EditText(this);
+        EditText input = new EditText(this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -221,7 +245,7 @@ public class A_GameActivity extends Activity {
             String name = input.getText().length() == 0 ? "[Игрок]" : String.valueOf(input.getText());
             String time = String.valueOf(chronometer.getText());
             Record record = new Record(name, time);
-            DBConnector.addRecord(getApplicationContext(), record);
+            dbConnector.addRecord(record);
             goToRecordsActivity();
             finish();
         });
@@ -230,13 +254,18 @@ public class A_GameActivity extends Activity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        dbConnector.close();
+        super.onDestroy();
+    }
 
     private void goToMenuActivity() {
-        startActivity(new Intent(this, A_MenuActivity.class));
+        startActivity(new Intent(this, AMenuActivity.class));
     }
 
     private void goToRecordsActivity() {
-        startActivity(new Intent(this, A_RecordsTableActivity.class));
+        startActivity(new Intent(this, ARecordsTableActivity.class));
     }
 
     public Logic getLogic() {

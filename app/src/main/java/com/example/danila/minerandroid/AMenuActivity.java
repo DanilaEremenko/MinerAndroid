@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class A_MenuActivity extends Activity {
+public class AMenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +40,11 @@ public class A_MenuActivity extends Activity {
     }
 
     private void goToChooseLevelActivity() {
-        startActivity(new Intent(this, A_ChooseLevelActivity.class));
+        startActivity(new Intent(this, AChooseLevelActivity.class));
     }
 
     private void goToRecordsActivity() {
-        startActivity(new Intent(this, A_RecordsTableActivity.class));
+        startActivity(new Intent(this, ARecordsTableActivity.class));
     }
 
 }

@@ -5,21 +5,14 @@
     android:id="@+id/game_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/default_margin"
     android:orientation="vertical"
-    android:layout_marginStart="2dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginEnd="2dp"
-    android:layout_marginBottom="2dp"
-    tools:context=".A_GameActivity">
+    tools:context=".AGameActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="2dp"
         android:layout_weight="1">
 
         <TextView
@@ -27,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="000"
+            android:text="@string/default_timer"
             android:textSize="40sp" />
 
         <Chronometer
@@ -44,22 +37,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="2dp"
-        android:orientation="horizontal"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:orientation="horizontal">
 
 
         <LinearLayout
             android:id="@+id/butons_field"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
-
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/menu_button"
@@ -90,12 +77,8 @@
             android:id="@+id/game_field"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="2dp"
-            android:layout_gravity="start"
             android:layout_weight="3">
+
         </GridLayout>
 
     </LinearLayout>

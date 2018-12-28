@@ -17,7 +17,6 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
     public static final int MINE_COLOR = Color.RED;
 
 
-    @SuppressLint("SetTextI18n")
     GraphicCell(Activity gameActivity, LogicCell logicCell) {
         super(gameActivity, null, R.style.grid_button);
 
@@ -28,7 +27,7 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
         params.setGravity(Gravity.FILL);
         setLayoutParams(params);
-
+        setId(logicCell.getNumberInArray());
 
         this.logicCell = logicCell;
 
@@ -38,15 +37,13 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
     }
 
 
-    //Проверка клетки,не для бота
-    @SuppressLint("SetTextI18n")
     void update() {
         if (logicCell.isChecked()) {
             if (logicCell.getConditon() == 9)
                 setBackgroundColor(MINE_COLOR);
             else {
                 setBackgroundColor(EMPTY_COLOR);
-                setText("" + logicCell.getConditon());
+                setText(String.valueOf(logicCell.getConditon()));
             }
         } else if (logicCell.isFlag()) {
             setBackgroundColor(FLAG_COLOR);

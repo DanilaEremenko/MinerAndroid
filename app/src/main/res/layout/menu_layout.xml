@@ -3,20 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/menu_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/default_margin"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/butons_field"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="@dimen/default_menu_height"
             android:orientation="vertical">
 
             <Button

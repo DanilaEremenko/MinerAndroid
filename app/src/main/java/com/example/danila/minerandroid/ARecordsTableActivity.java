@@ -1,15 +1,19 @@
 package com.example.danila.minerandroid;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.GridLayout;
 import android.widget.TextView;
+
 import java.util.List;
 
-public class A_RecordsTableActivity extends Activity {
+public class ARecordsTableActivity extends Activity {
 
-    @SuppressLint("SetTextI18n")
+    private DBConnector dbConnector;
+
+    private static final int TEXT_SIZE = 40;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,9 +22,9 @@ public class A_RecordsTableActivity extends Activity {
         GridLayout gridRecords = findViewById(R.id.records_layout);
         gridRecords.setColumnCount(2);
 
-        List<Record> records = DBConnector.getAllRecords(this);
+        dbConnector = new DBConnector(getApplicationContext());
+        List<Record> records = dbConnector.getAllRecords(this);
 
-        final int TEXT_SIZE = 40;
 
         int i = 1;
         if (records != null)
@@ -29,12 +33,12 @@ public class A_RecordsTableActivity extends Activity {
                 TextView timeView = new TextView(this);
 
 
-                nameView.setText(i + "\nName\n" + record.getName());
+                nameView.setText(String.valueOf(i + "\nName\n" + record.getName()));
                 nameView.setTextSize(TEXT_SIZE);
                 nameView.setTextColor(getResources().getColor(R.color.colorAccent));
 
 
-                timeView.setText("Time\n" + record.getTime() + "\n-------------");
+                timeView.setText(String.valueOf("Time\n" + record.getTime() + "\n-------------"));
                 timeView.setTextSize(TEXT_SIZE * 3 / 4);
                 timeView.setTextColor(getResources().getColor(R.color.colorAccent));
 
@@ -47,6 +51,10 @@ public class A_RecordsTableActivity extends Activity {
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        dbConnector.close();
+        super.onDestroy();
+    }
 }
 

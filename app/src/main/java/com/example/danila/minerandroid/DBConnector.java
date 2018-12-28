@@ -12,25 +12,25 @@ import java.util.List;
 
 
 class DBConnector {
+    private DBHelper helper;
+    private SQLiteDatabase database;
 
+    DBConnector(Context context) {
+        helper = new DBHelper(context);
+        database = helper.getWritableDatabase();
 
-    static void addRecord(Context context, Record record) {
-        DBHelper helper = new DBHelper(context);
-        SQLiteDatabase database = helper.getWritableDatabase();
+    }
+
+    void addRecord(Record record) {
         ContentValues values = new ContentValues();
         values.put(DBHelper.KEY_NAME, record.getName());
         values.put(DBHelper.KEY_TIME, record.getTime());
         database.insert(DBHelper.TABLE_NAME, null, values);
-        database.close();
-        helper.close();
     }
 
-    static List<Record> getAllRecords(Context context) {
+    List<Record> getAllRecords(Context context) {
 
         final int MAX_RECORDS_SIZE = 10;
-
-        DBHelper helper = new DBHelper(context);
-        SQLiteDatabase database = helper.getReadableDatabase();
 
         @SuppressLint("Recycle")
         Cursor cursor = database.query(DBHelper.TABLE_NAME, null, null,
@@ -49,8 +49,6 @@ class DBConnector {
                 ));
             } while (cursor.moveToNext() && records.size() < MAX_RECORDS_SIZE);
 
-            database.close();
-            helper.close();
             cursor.close();
 
             Collections.sort(records);
@@ -58,9 +56,11 @@ class DBConnector {
 
             return records;
         }
-        database.close();
-        helper.close();
         return null;
     }
 
+    void close() {
+        helper.close();
+        database.close();
+    }
 }

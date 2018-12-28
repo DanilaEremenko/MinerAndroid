@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class A_ChooseLevelActivity extends Activity {
+public class AChooseLevelActivity extends Activity {
     final int EASY_MINES_NUMBER = 6;
     final int MEDIUM_MINES_NUMBER = 9;
     final int HARD_MINES_NUMBER = 12;
@@ -46,7 +46,7 @@ public class A_ChooseLevelActivity extends Activity {
     }
 
     private void goToGameActivity(int minesNumber) {
-        A_GameActivity.setMinesNumber(minesNumber);
-        startActivity(new Intent(this, A_GameActivity.class));
+        AGameActivity.setMinesNumber(minesNumber);
+        startActivity(new Intent(this, AGameActivity.class));
     }
 }
